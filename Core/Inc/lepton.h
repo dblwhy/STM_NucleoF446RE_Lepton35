@@ -35,13 +35,16 @@
 #define LEPTON_CS_HIGH      HAL_GPIO_WritePin(LEPTON_PORT, LEPTON_CS_PIN, GPIO_PIN_SET)
 #define LEPTON_CS_LOW       HAL_GPIO_WritePin(LEPTON_PORT, LEPTON_CS_PIN, GPIO_PIN_RESET)
 
+#define LEPTON_OK  0
+#define LEPTON_ERR -1
+
 LEP_RESULT Lepton_OpenPort(void);
 void Lepton_StartupSequence(void);
 void Lepton_InitVsync(void);
 void Lepton_InitVideoOutputFormat(void);
 void Lepton_PrintSdkVersion(void);
 void Lepton_ReceivePacketDMA(void);
-void Lepton_ProcessPacket(void);
+int Lepton_ProcessPacket(void);
 
 
 #endif /* INC_LEPTON_H_ */

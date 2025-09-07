@@ -71,12 +71,9 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 			frame_in_progress = 0;
 			lepton_frame_index = 0;
 
-			// Printing first 10 bytes for debugging
-			for (int i = 0; i < 10; i++)
-			{
-				printf("%02X ", lepton_frame[i]);
-			}
-			printf("\r\n");
+			// Printing last byte for debugging. Note that it may get out of sync if you debug more than 1 byte
+			// (process will not complete before next vsync).
+			printf("%02X ", lepton_frame[239]);
 		}
 	}
 }

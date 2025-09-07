@@ -109,7 +109,7 @@ void Lepton_ReceivePacketDMA(void)
 	}
 }
 
-void Lepton_ProcessPacket(void)
+int Lepton_ProcessPacket(void)
 {
 	uint32_t header = ((uint32_t)lepton_packet[0] << 24) |
 					  ((uint32_t)lepton_packet[1] << 16) |
@@ -122,18 +122,12 @@ void Lepton_ProcessPacket(void)
 	if (discard)
 	{
 		// discard Discard Packet
-		return;
+		return LEPTON_ERR;
 	}
 	if (segment_number == 0 && packet_number == 20)
 	{
 		// discard Segment 0 (valid segment is 1..4)
-		return;
-	}
-
-	if (segment_number == 4 && packet_number == 20)
-	{
-		// for debugging
-		printf("segment=%u packet=%u\r\n", segment_number, packet_number);
+		return LEPTON_ERR;
 	}
 
 	// store packet into frame buffer
@@ -143,4 +137,6 @@ void Lepton_ProcessPacket(void)
 			VOSPI_PKT_BODY_SIZE);
 
 	lepton_frame_index++;
+
+	return LEPTON_OK;
 }
