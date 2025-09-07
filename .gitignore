@@ -1,0 +1,11 @@
+/*.launch
+/*.log
+/*.mxproject
+.DS_Store
+Thumbs.db
+/Debug/
+/Release/
+/build/
+/bin/
+/obj/
+/out/
