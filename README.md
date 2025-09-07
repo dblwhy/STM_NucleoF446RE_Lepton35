@@ -11,7 +11,7 @@ STM32 Nucleo-F446RE BareMetal project using FLIR Lepton 3.5.
 ![Segment and Packet Relationship to the 160x120 video image](Docs/frame-structure.png)
 
 ### BreakoutBoard2.0
-In this project, I used [FLIR Lepton Breakout Board v2.0](Docs/BreakoutBoard_2_DS.pdf). It does't mention in the specification but there is also another VIN/GND pin next to the sensor socket, please don't to wire it as well. Details in [GETTING STARTED WITH THE RASPBERRY PI AND BREAKOUT BOARD V2.0](Docs/getting-started-with-the-raspberry-pi-and-breakout-board-v2.pdf).
+In this project, I used [FLIR Lepton Breakout Board v2.0](Docs/BreakoutBoard_2_DS.pdf). It does't mention in the specification but there is also another VIN/GND pin next to the sensor socket, please don't forget to wire it as well. Details in [GETTING STARTED WITH THE RASPBERRY PI AND BREAKOUT BOARD V2.0](Docs/getting-started-with-the-raspberry-pi-and-breakout-board-v2.pdf).
 
 ### VSYNC
 
