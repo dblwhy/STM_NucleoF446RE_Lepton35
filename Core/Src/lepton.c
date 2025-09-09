@@ -103,7 +103,7 @@ void Lepton_ReceivePacketDMA(void)
 	HAL_StatusTypeDef result = HAL_SPI_TransmitReceive_DMA(&hspi1, dummy_tx_buffer, lepton_packet, VOSPI_PKT_SIZE);
 	if (result != HAL_OK)
 	{
-		printf("=== HAL_SPI_Receive_DMA ===\r\n");
+		printf("=== HAL_SPI_TransmitReceive_DMA ===\r\n");
 		printf("Result: %d\r\n", result);
 		printf("SPI State after: %d\r\n", hspi1.State);
 		printf("SPI ErrorCode after: 0x%08X\r\n", hspi1.ErrorCode);
