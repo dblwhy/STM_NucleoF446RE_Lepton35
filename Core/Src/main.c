@@ -10,7 +10,7 @@
 #include "lepton.h"
 
 volatile uint8_t vsync_flag = 0;
-volatile uint8_t frame_in_progress = 0;
+volatile uint8_t segment_in_progress = 0;
 volatile uint16_t current_packet = 0;
 
 extern SPI_HandleTypeDef hspi1;
@@ -40,7 +40,7 @@ int main(void)
         if (vsync_flag)
         {
             vsync_flag = 0;
-            frame_in_progress = 1;
+            segment_in_progress = 1;
 
             Lepton_ReceivePacketDMA();
         }

@@ -14,12 +14,13 @@ extern DMA_HandleTypeDef hdma2_stream2_rx;
 extern DMA_HandleTypeDef hdma2_stream2_tx;
 
 extern volatile uint8_t vsync_flag;
-extern volatile uint8_t frame_in_progress;
+extern volatile uint8_t segment_in_progress;
 extern volatile uint16_t current_packet;
 
 extern uint8_t lepton_packet[VOSPI_PKT_SIZE];
 extern uint8_t lepton_frame[VOSPI_FRAME_SIZE];
 extern uint8_t lepton_frame_index;
+extern uint8_t last_segment_number;
 
 void SysTick_Handler(void)
 {
@@ -43,7 +44,7 @@ void DMA2_Stream3_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	// Received VSYNC
-	if (GPIO_Pin == GPIO_PIN_0 && !frame_in_progress)
+	if (GPIO_Pin == GPIO_PIN_0 && !segment_in_progress)
 	{
 		current_packet = 0;
 		vsync_flag = 1;
@@ -67,13 +68,24 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 		}
 		else
 		{
+			segment_in_progress = 0;
+
+			if (last_segment_number == 0) {
+				lepton_frame_index = 0;
+			}
+			if (last_segment_number <= 3)
+			{
+				return;
+			}
+
 			// Frame completed!!
-			frame_in_progress = 0;
-			lepton_frame_index = 0;
 
 			// Printing last byte for debugging. Note that it may get out of sync if you debug more than 1 byte
-			// (process will not complete before next vsync).
-			printf("%02X ", lepton_frame[239]);
+			// (next vsync may trigger before finishing the printing).
+			printf("%02X ", lepton_frame[VOSPI_FRAME_SIZE-1]);
+
+			lepton_frame_index = 0;
+			last_segment_number = 0;
 		}
 	}
 }
